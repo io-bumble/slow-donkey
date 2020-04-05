@@ -18,7 +18,7 @@
 
 package io.bumble.slowdonkey.server.persistence;
 
-import io.bumble.slowdonkey.server.util.SingletonUtil;
+import io.bumble.slowdonkey.common.util.SingletonUtil;
 
 import java.util.List;
 import java.util.Map;

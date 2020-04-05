@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.util;
+package io.bumble.slowdonkey.common.util;
 
 import io.bumble.slowdonkey.common.exception.ShouldNotHappenException;
 

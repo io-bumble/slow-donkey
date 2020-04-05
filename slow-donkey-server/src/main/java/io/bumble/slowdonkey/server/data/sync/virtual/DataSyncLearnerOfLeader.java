@@ -19,11 +19,11 @@
 package io.bumble.slowdonkey.server.data.sync.virtual;
 
 import io.bumble.slowdonkey.common.model.Node;
+import io.bumble.slowdonkey.common.remoting.TransportClient;
 import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncRequest;
 import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncResponse;
 import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
 import io.bumble.slowdonkey.server.persistence.Offset;
-import io.bumble.slowdonkey.server.remoting.TransportClient;
 
 /**
  * @author shenxiangyu on 2020/03/31

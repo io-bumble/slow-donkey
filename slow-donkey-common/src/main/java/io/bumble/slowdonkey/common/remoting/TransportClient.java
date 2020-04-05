@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.remoting;
+package io.bumble.slowdonkey.common.remoting;
 
 import io.bumble.slowdonkey.common.model.network.base.Request;
 import io.bumble.slowdonkey.common.model.network.base.Response;
-import io.bumble.slowdonkey.server.util.SingletonUtil;
+import io.bumble.slowdonkey.common.util.SingletonUtil;
 
 /**
  * @author shenxiangyu on 2020/03/31

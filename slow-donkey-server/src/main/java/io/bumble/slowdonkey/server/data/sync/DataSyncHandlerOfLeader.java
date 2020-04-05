@@ -19,11 +19,11 @@
 package io.bumble.slowdonkey.server.data.sync;
 
 import io.bumble.slowdonkey.common.model.Node;
+import io.bumble.slowdonkey.common.util.SingletonUtil;
 import io.bumble.slowdonkey.server.data.sync.virtual.DataSyncLearnerOfLeader;
 import io.bumble.slowdonkey.server.persistence.CommitLog;
 import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
 import io.bumble.slowdonkey.server.persistence.Offset;
-import io.bumble.slowdonkey.server.util.SingletonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

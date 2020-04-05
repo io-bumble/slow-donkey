@@ -18,7 +18,7 @@
 
 package io.bumble.slowdonkey.server.remoting;
 
-import io.bumble.slowdonkey.server.util.SingletonUtil;
+import io.bumble.slowdonkey.common.util.SingletonUtil;
 
 /**
  * @author shenxiangyu on 2020/03/31

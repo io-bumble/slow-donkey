@@ -18,11 +18,11 @@
 
 package io.bumble.slowdonkey.server;
 
+import io.bumble.slowdonkey.common.util.SingletonUtil;
 import io.bumble.slowdonkey.server.role.Candidate;
 import io.bumble.slowdonkey.server.role.Follower;
 import io.bumble.slowdonkey.server.role.Leader;
 import io.bumble.slowdonkey.server.role.Role;
-import io.bumble.slowdonkey.server.util.SingletonUtil;
 
 /**
  * This represents for the machine node itself, and the role will be changed among FOLLOWER, CANDIDATE and LEADER.
