@@ -16,12 +16,23 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.role.virtual;
+package io.bumble.slowdonkey.client.property;
+
+import io.bumble.slowdonkey.common.property.AbstractSlowDonkeyPropertyHolder;
+import io.bumble.slowdonkey.common.util.SingletonUtil;
 
 /**
- * The leader role imagined by the follower, and all the abilities are defined from the follower's perspective.
+ * Client side properties holder
  *
- * @author shenxiangyu on 2020/03/30
+ * @author shenxiangyu on 2020/04/05
  */
-public class LeaderOfFollower implements VirtualRole {
+public class SlowDonkeyClientPropertyHolder extends AbstractSlowDonkeyPropertyHolder {
+
+    public SlowDonkeyClientPropertyHolder() {
+        super();
+    }
+
+    public static SlowDonkeyClientPropertyHolder getInstance() {
+        return SingletonUtil.getInstance(SlowDonkeyClientPropertyHolder.class);
+    }
 }

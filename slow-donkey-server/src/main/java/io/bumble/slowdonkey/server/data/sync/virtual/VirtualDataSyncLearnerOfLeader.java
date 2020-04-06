@@ -16,25 +16,32 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.data;
+package io.bumble.slowdonkey.server.data.sync.virtual;
 
-import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
-import io.bumble.slowdonkey.common.util.SingletonUtil;
+import io.bumble.slowdonkey.common.model.Node;
+import io.bumble.slowdonkey.common.remoting.TransportClient;
+import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncRequest;
+import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncResponse;
+import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
+import io.bumble.slowdonkey.server.persistence.Offset;
 
 /**
  * @author shenxiangyu on 2020/03/31
  */
-public class DataTree {
+public class VirtualDataSyncLearnerOfLeader extends Node {
 
-    public static DataTree getInstance() {
-        return SingletonUtil.getInstance(DataTree.class);
+    public Offset getCommitOffset() {
+
+
+        return null;
     }
 
-    public void writeUncommittedLog(WriteRequest request) {
+    public boolean sync(CommitLogEntry commitLogEntry) {
 
-    }
+        // Send data sync request to TODO
 
-    public void read() {
+        DataSyncResponse response = TransportClient.getInstance().syncRequest(new DataSyncRequest(commitLogEntry));
 
+        return response.isSuccess();
     }
 }

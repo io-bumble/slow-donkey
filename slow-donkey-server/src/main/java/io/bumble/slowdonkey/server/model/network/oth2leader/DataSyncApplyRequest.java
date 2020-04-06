@@ -16,12 +16,18 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.role.virtual;
+package io.bumble.slowdonkey.server.model.network.oth2leader;
+
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
+import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
 
 /**
- * The follower role imagined by the leader object, and all the abilities are defined from the leader's perspective.
- *
- * @author shenxiangyu on 2020/03/30
+ * @author shenxiangyu on 2020/03/31
  */
-public class FollowerOfLeader implements VirtualRole {
+public class DataSyncApplyRequest extends Request {
+
+    public DataSyncApplyRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_OTHER_TO_SERVER_LEADER);
+    }
 }

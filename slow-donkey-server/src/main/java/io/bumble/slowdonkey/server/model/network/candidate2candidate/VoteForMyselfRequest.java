@@ -16,25 +16,17 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.data;
+package io.bumble.slowdonkey.server.model.network.candidate2candidate;
 
-import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
-import io.bumble.slowdonkey.common.util.SingletonUtil;
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 
 /**
- * @author shenxiangyu on 2020/03/31
+ * @author shenxiangyu on 2020/04/05
  */
-public class DataTree {
+public class VoteForMyselfRequest extends Request {
 
-    public static DataTree getInstance() {
-        return SingletonUtil.getInstance(DataTree.class);
-    }
-
-    public void writeUncommittedLog(WriteRequest request) {
-
-    }
-
-    public void read() {
-
+    public VoteForMyselfRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_CANDIDATE_TO_SERVER_ALL);
     }
 }

@@ -16,55 +16,39 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.common.model;
+package io.bumble.slowdonkey.common.model.network.base;
 
 /**
- * Represent a real machine in the cluster as a node
+ * Indicating the request direction, make request clear of showing the original
+ * request sender and the destination handler
  *
- * @author shenxiangyu on 2020/03/31
+ * @author shenxiangyu on 2020/04/05
  */
-public class Node {
+public enum RequestDirectionEnum {
 
     /**
-     * The ip address and port
+     * Send from the client to the server leader role node
      */
-    private Host host;
-
-    public Node() {}
-
-    public Host getHost() {
-        return host;
-    }
-
-    public void setHost(Host host) {
-        this.host = host;
-    }
+    CLIENT_TO_SERVER_LEADER,
 
     /**
-     * IP address and port
+     * Send from the client to all the server node
      */
-    public class Host {
+    CLIENT_TO_SERVER_ALL,
 
-        private String ip;
+    /**
+     * Send from the server leader role node to server other role nodes
+     */
+    SERVER_LEADER_TO_SERVER_OTHER,
 
-        private int port;
+    /**
+     * Send from the server other role nodes to the server leader role node
+     */
+    SERVER_OTHER_TO_SERVER_LEADER,
 
-        public Host(String ip, int port) {
-            this.ip = ip;
-            this.port = port;
-        }
-
-        @Override
-        public String toString() {
-            return ip + ":" + port;
-        }
-
-        public String getIp() {
-            return ip;
-        }
-
-        public int getPort() {
-            return port;
-        }
-    }
+    /**
+     * Send from the server candidate role nodes to all the other server nodes
+     */
+    SERVER_CANDIDATE_TO_SERVER_ALL,
+    ;
 }

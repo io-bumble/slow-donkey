@@ -16,25 +16,17 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.data;
+package io.bumble.slowdonkey.common.model.network.client2server;
 
-import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
-import io.bumble.slowdonkey.common.util.SingletonUtil;
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 
 /**
- * @author shenxiangyu on 2020/03/31
+ * @author shenxiangyu on 2020/04/04
  */
-public class DataTree {
+public class HighConcurrentReadRequest extends Request {
 
-    public static DataTree getInstance() {
-        return SingletonUtil.getInstance(DataTree.class);
-    }
-
-    public void writeUncommittedLog(WriteRequest request) {
-
-    }
-
-    public void read() {
-
+    public HighConcurrentReadRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.CLIENT_TO_SERVER_ALL);
     }
 }

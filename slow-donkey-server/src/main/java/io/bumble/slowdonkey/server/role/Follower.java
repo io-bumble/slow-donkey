@@ -18,23 +18,21 @@
 
 package io.bumble.slowdonkey.server.role;
 
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.Response;
 import io.bumble.slowdonkey.server.SlowDonkey;
 import io.bumble.slowdonkey.server.LifeCycle;
 import io.bumble.slowdonkey.server.model.Vote;
-import io.bumble.slowdonkey.server.role.virtual.LeaderOfFollower;
 
 /**
  * Follower is the default role of a machine node.
  *
  * @author shenxiangyu on 2020/03/30
  */
-public class Follower implements Learner, Voter, LifeCycle {
-
-    private LeaderOfFollower leader;
+public class Follower extends AbstractLearner implements Voter, LifeCycle {
 
     @Override
-    public void receiveRequest() {
-
+    protected <T extends Request, R extends Response> R doReceiveRequest(T request) {
         // If it is a heart beat request from leader, then reset the countdown timer for turning to candidate.
 
         // If it is a data sync request from leader, then a data sync process will be launched, and TODO
@@ -44,7 +42,7 @@ public class Follower implements Learner, Voter, LifeCycle {
 
         // If it is a commit write request from leader, then change the uncommitted record to committed state.
 
-
+        return null;
     }
 
     @Override

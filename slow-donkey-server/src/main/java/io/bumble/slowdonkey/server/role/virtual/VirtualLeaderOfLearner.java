@@ -16,25 +16,20 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.data;
+package io.bumble.slowdonkey.server.role.virtual;
 
-import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
-import io.bumble.slowdonkey.common.util.SingletonUtil;
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.Response;
+import io.bumble.slowdonkey.common.remoting.TransportClient;
 
 /**
- * @author shenxiangyu on 2020/03/31
+ * The leader role imagined by the follower, and all the abilities are defined from the learner's perspective.
+ *
+ * @author shenxiangyu on 2020/04/05
  */
-public class DataTree {
+public class VirtualLeaderOfLearner implements VirtualRole {
 
-    public static DataTree getInstance() {
-        return SingletonUtil.getInstance(DataTree.class);
-    }
-
-    public void writeUncommittedLog(WriteRequest request) {
-
-    }
-
-    public void read() {
-
+    public <T extends Request, R extends Response> R redirectRequestToLeader(T request) {
+        return TransportClient.getInstance().syncRequest(request);
     }
 }

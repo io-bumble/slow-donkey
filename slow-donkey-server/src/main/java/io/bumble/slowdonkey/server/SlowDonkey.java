@@ -18,6 +18,8 @@
 
 package io.bumble.slowdonkey.server;
 
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.Response;
 import io.bumble.slowdonkey.common.util.SingletonUtil;
 import io.bumble.slowdonkey.server.role.Candidate;
 import io.bumble.slowdonkey.server.role.Follower;
@@ -27,11 +29,14 @@ import io.bumble.slowdonkey.server.role.Role;
 /**
  * This represents for the machine node itself, and the role will be changed among FOLLOWER, CANDIDATE and LEADER.
  * <pre>
+ *     The following is the role change direction
  *     follower -> candidate -> leader
  *       ^  ^           |         |
  *       |  |           v         |
  *       |  `-----------          v
  *       `------------------------
+ *
+ *     observer role is a delicate role fixed right there for supporting more client concurrent read
  * </pre>
  *
  * @author shenxiangyu on 2020/03/30
@@ -60,8 +65,8 @@ public class SlowDonkey implements LifeCycle {
 
     }
 
-    public void receiveRequest() {
-        currentRole.receiveRequest();
+    public <T extends Request, R extends Response> R receiveRequest(T request) {
+        return currentRole.receiveRequest(request);
     }
 
     public Role getCurrentRole() {

@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.role;
+package io.bumble.slowdonkey.server.data.write;
 
 /**
- * @author shenxiangyu on 2020/04/04
+ * @author shenxiangyu on 2020/04/05
  */
-public interface Learner extends Role {
+public class DataWriteHandlerOfFollower {
 }

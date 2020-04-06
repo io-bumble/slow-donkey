@@ -18,6 +18,9 @@
 
 package io.bumble.slowdonkey.server.role;
 
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.Response;
+
 /**
  * Represent for the real role of the node
  *
@@ -25,5 +28,13 @@ package io.bumble.slowdonkey.server.role;
  */
 public interface Role {
 
-    void receiveRequest();
+    /**
+     * Receive the incoming request
+     *
+     * @param request request
+     * @param <T> request type
+     * @param <R> response type
+     * @return response
+     */
+    <T extends Request, R extends Response> R receiveRequest(T request);
 }

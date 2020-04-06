@@ -16,12 +16,31 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.common.model.network.client2server;
+package io.bumble.slowdonkey.server.role.virtual;
 
-import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.remoting.TransportClient;
+import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncRequest;
+import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncResponse;
+import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
+import io.bumble.slowdonkey.server.persistence.Offset;
 
 /**
- * @author shenxiangyu on 2020/04/04
+ * @author shenxiangyu on 2020/04/05
  */
-public class ReadRequest extends Request {
+public class VirtualObserverOfLeader implements VirtualRole {
+
+    public Offset getCommitOffset() {
+
+
+        return null;
+    }
+
+    public boolean sync(CommitLogEntry commitLogEntry) {
+
+        // Send data sync request to TODO
+
+        DataSyncResponse response = TransportClient.getInstance().syncRequest(new DataSyncRequest(commitLogEntry));
+
+        return response.isSuccess();
+    }
 }

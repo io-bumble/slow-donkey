@@ -16,17 +16,32 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.common.model.network.client2server;
+package io.bumble.slowdonkey.server.role;
 
 import io.bumble.slowdonkey.common.model.network.base.Request;
-import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
+import io.bumble.slowdonkey.common.model.network.base.Response;
+import io.bumble.slowdonkey.server.role.virtual.VirtualLeaderOfLearner;
+
+import static io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum.CLIENT_TO_SERVER_LEADER;
 
 /**
  * @author shenxiangyu on 2020/04/04
  */
-public class WriteRequest extends Request {
+public abstract class AbstractLearner implements Role {
 
-    public WriteRequest() {
-        super.setRequestDirectionEnum(RequestDirectionEnum.CLIENT_TO_SERVER_LEADER);
+    protected VirtualLeaderOfLearner virtualLeaderOfLearner;
+
+    @Override
+    public <T extends Request, R extends Response> R receiveRequest(T request) {
+
+        if (CLIENT_TO_SERVER_LEADER.equals(request.getRequestDirectionEnum())) {
+
+            // Redirect the request to the leader if the request destination is leader
+            return virtualLeaderOfLearner.redirectRequestToLeader(request);
+        }
+
+        return doReceiveRequest(request);
     }
+
+    abstract protected <T extends Request, R extends Response> R doReceiveRequest(T request);
 }

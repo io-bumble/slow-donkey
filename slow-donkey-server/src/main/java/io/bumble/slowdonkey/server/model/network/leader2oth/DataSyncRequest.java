@@ -19,6 +19,7 @@
 package io.bumble.slowdonkey.server.model.network.leader2oth;
 
 import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
 
 /**
@@ -28,7 +29,9 @@ public class DataSyncRequest extends Request {
 
     private CommitLogEntry commitLogEntry;
 
-    public DataSyncRequest() {}
+    public DataSyncRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SERVER_OTHER);
+    }
 
     public DataSyncRequest(CommitLogEntry commitLogEntry) {
         this.commitLogEntry = commitLogEntry;

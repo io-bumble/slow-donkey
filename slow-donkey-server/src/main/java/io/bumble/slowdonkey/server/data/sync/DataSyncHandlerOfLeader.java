@@ -20,7 +20,7 @@ package io.bumble.slowdonkey.server.data.sync;
 
 import io.bumble.slowdonkey.common.model.Node;
 import io.bumble.slowdonkey.common.util.SingletonUtil;
-import io.bumble.slowdonkey.server.data.sync.virtual.DataSyncLearnerOfLeader;
+import io.bumble.slowdonkey.server.data.sync.virtual.VirtualDataSyncLearnerOfLeader;
 import io.bumble.slowdonkey.server.persistence.CommitLog;
 import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
 import io.bumble.slowdonkey.server.persistence.Offset;
@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Handle data sync from leader to learners
  *
  * @author shenxiangyu on 2020/03/31
  */
@@ -38,44 +39,49 @@ public class DataSyncHandlerOfLeader extends Node {
 
     private Logger logger = LoggerFactory.getLogger(DataSyncHandlerOfLeader.class);
 
-    private Map<String, DataSyncLearnerOfLeader> learnerOfLeaderMap;
+    private Map<String, VirtualDataSyncLearnerOfLeader> learnerOfLeaderMap;
 
     public static DataSyncHandlerOfLeader getInstance() {
         return SingletonUtil.getInstance(DataSyncHandlerOfLeader.class);
     }
 
+    /**
+     * Sync data to all learners
+     */
     public void syncToAllLearners() {
-
-        for (Map.Entry<String, DataSyncLearnerOfLeader> entry : learnerOfLeaderMap.entrySet()) {
+        for (Map.Entry<String, VirtualDataSyncLearnerOfLeader> entry : learnerOfLeaderMap.entrySet()) {
             syncToLearner(entry.getKey());
         }
     }
 
-    public void syncToLearner(String learnerHost) {
-        DataSyncLearnerOfLeader learner = learnerOfLeaderMap.get(learnerHost);
+    public void syncToLearner(String host) {
+        VirtualDataSyncLearnerOfLeader learner = learnerOfLeaderMap.get(host);
         if (learner == null) {
-            logger.error("[Data Sync] slave not found from master [] to slave [{}]", super.getHost(), learnerHost);
+            learner = learnerOfLeaderMap.get(host);
+        }
+        if (learner == null) {
+            logger.error("[Data Sync] slave not found from master [{}] to slave [{}]", super.getHost(), host);
             return;
         }
+        syncToLearner(learner);
+    }
 
+    public void syncToLearner(VirtualDataSyncLearnerOfLeader learner) {
         Offset offset = learner.getCommitOffset();
         if (offset == null) {
-            logger.error("[Data Sync] get commit offset failed from master [] to slave [{}]", super.getHost(), learner.getHost());
+            logger.error("[Data Sync] get commit offset failed from master [{}] to slave [{}]", super.getHost(), learner.getHost());
             return;
         }
 
         // Get commit log entries which should be synchronized to this slave
         List<CommitLogEntry> commitLogEntries = CommitLog.getInstance().getCommittedEntryListFromOffset(offset);
 
-        boolean syncSuccessForThisSlave = true;
         for (CommitLogEntry commitLogEntry : commitLogEntries) {
-            syncSuccessForThisSlave = learner.sync(commitLogEntry);
-            if (!syncSuccessForThisSlave) {
-                break;
+            boolean syncSuccess = learner.sync(commitLogEntry);
+            if (!syncSuccess) {
+                logger.error("[Data Sync] sync failed from master [{}] to slave [{}]", super.getHost(), learner.getHost());
+                return;
             }
-        }
-        if (!syncSuccessForThisSlave) {
-            logger.error("[Data Sync] sync failed from master [] to slave [{}]", super.getHost(), learner.getHost());
         }
     }
 }

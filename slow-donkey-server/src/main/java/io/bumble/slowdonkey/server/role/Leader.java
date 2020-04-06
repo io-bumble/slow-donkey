@@ -18,24 +18,36 @@
 
 package io.bumble.slowdonkey.server.role;
 
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.Response;
+import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 import io.bumble.slowdonkey.server.LifeCycle;
+import io.bumble.slowdonkey.server.data.write.DataWriteHandlerOfLeader;
 import io.bumble.slowdonkey.server.model.Vote;
-import io.bumble.slowdonkey.server.role.virtual.FollowerOfLeader;
+import io.bumble.slowdonkey.server.role.virtual.VirtualFollowerOfLeader;
+import io.bumble.slowdonkey.server.role.virtual.VirtualObserverOfLeader;
 
 import java.util.List;
 
 /**
- *
+ * Responsible for acting as a leader node
  *
  * @author shenxiangyu on 2020/03/30
  */
+@SuppressWarnings("unchecked")
 public class Leader implements Role, Voter, LifeCycle {
 
-    private List<FollowerOfLeader> followerList;
+    private List<VirtualFollowerOfLeader> followerList;
+
+    private List<VirtualObserverOfLeader> observerList;
 
     @Override
-    public void receiveRequest() {
+    public <T extends Request, R extends Response> R receiveRequest(T request) {
 
+        if (request instanceof WriteRequest) {
+            return (R) DataWriteHandlerOfLeader.getInstance().write((WriteRequest) request, followerList, observerList);
+        }
+        return null;
     }
 
     @Override

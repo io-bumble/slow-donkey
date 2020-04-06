@@ -19,9 +19,14 @@
 package io.bumble.slowdonkey.common.model.network.client2server;
 
 import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 
 /**
  * @author shenxiangyu on 2020/04/04
  */
 public class ClientHeartBeatRequest extends Request {
+
+    public ClientHeartBeatRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.CLIENT_TO_SERVER_LEADER);
+    }
 }

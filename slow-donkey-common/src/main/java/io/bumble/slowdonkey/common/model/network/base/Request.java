@@ -20,20 +20,76 @@ package io.bumble.slowdonkey.common.model.network.base;
 
 import io.bumble.slowdonkey.common.model.Node;
 
+import java.util.Queue;
+
 /**
+ *
  * @author shenxiangyu on 2020/03/31
  */
 public class Request {
 
-    private Node.Host host;
+    private Node.Host orgClientHost;
+
+    private Node.Host orgServerHost;
+
+    private Node.Host clientHost;
+
+    private Node.Host serverHost;
+
+    private Queue<Node.Host> requestCallStack;
+
+    /**
+     * Indicating the request direction
+     */
+    private RequestDirectionEnum requestDirectionEnum;
 
     public Request() {}
 
-    public Node.Host getHost() {
-        return host;
+    public Node.Host getOrgClientHost() {
+        return orgClientHost;
     }
 
-    public void setHost(Node.Host host) {
-        this.host = host;
+    public void setOrgClientHost(Node.Host orgClientHost) {
+        this.orgClientHost = orgClientHost;
+    }
+
+    public Node.Host getOrgServerHost() {
+        return orgServerHost;
+    }
+
+    public void setOrgServerHost(Node.Host orgServerHost) {
+        this.orgServerHost = orgServerHost;
+    }
+
+    public Node.Host getClientHost() {
+        return clientHost;
+    }
+
+    public void setClientHost(Node.Host clientHost) {
+        this.clientHost = clientHost;
+    }
+
+    public Node.Host getServerHost() {
+        return serverHost;
+    }
+
+    public void setServerHost(Node.Host serverHost) {
+        this.serverHost = serverHost;
+    }
+
+    public Queue<Node.Host> getRequestCallStack() {
+        return requestCallStack;
+    }
+
+    public void setRequestCallStack(Queue<Node.Host> requestCallStack) {
+        this.requestCallStack = requestCallStack;
+    }
+
+    public RequestDirectionEnum getRequestDirectionEnum() {
+        return requestDirectionEnum;
+    }
+
+    public void setRequestDirectionEnum(RequestDirectionEnum requestDirectionEnum) {
+        this.requestDirectionEnum = requestDirectionEnum;
     }
 }

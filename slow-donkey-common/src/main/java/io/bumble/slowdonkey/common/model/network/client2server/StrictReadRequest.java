@@ -18,10 +18,15 @@
 
 package io.bumble.slowdonkey.common.model.network.client2server;
 
-import io.bumble.slowdonkey.common.model.network.base.Response;
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 
 /**
- * @author shenxiangyu on 2020/04/04
+ * @author shenxiangyu on 2020/04/05
  */
-public class ReadResponse extends Response {
+public class StrictReadRequest extends Request {
+
+    public StrictReadRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.CLIENT_TO_SERVER_LEADER);
+    }
 }

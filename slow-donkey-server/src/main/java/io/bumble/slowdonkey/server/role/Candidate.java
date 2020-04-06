@@ -18,6 +18,8 @@
 
 package io.bumble.slowdonkey.server.role;
 
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.Response;
 import io.bumble.slowdonkey.server.SlowDonkey;
 import io.bumble.slowdonkey.server.LifeCycle;
 import io.bumble.slowdonkey.server.model.Vote;
@@ -36,12 +38,7 @@ import io.bumble.slowdonkey.server.model.Vote;
  *
  * @author shenxiangyu on 2020/03/30
  */
-public class Candidate implements Learner, Voter, LifeCycle {
-
-    @Override
-    public void receiveRequest() {
-
-    }
+public class Candidate extends AbstractLearner implements Voter, LifeCycle {
 
     @Override
     public Vote responseForVote(Vote vote) {
@@ -71,6 +68,11 @@ public class Candidate implements Learner, Voter, LifeCycle {
     @Override
     public void stop() {
 
+    }
+
+    @Override
+    protected <T extends Request, R extends Response> R doReceiveRequest(T request) {
+        return null;
     }
 
 }
