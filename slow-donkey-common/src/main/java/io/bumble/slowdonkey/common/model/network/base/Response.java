@@ -25,6 +25,20 @@ public class Response {
 
     private boolean success;
 
+    private String message;
+
+    public static <T extends Response> T renderResponse(boolean success) {
+        return Response.renderResponse(success, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends Response> T renderResponse(boolean success, String message) {
+        Response response = new Response();
+        response.setSuccess(success);
+        response.setMessage(message);
+        return (T) response;
+    }
+
     public Response() {}
 
     public boolean isSuccess() {
@@ -33,5 +47,13 @@ public class Response {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

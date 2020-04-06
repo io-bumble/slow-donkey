@@ -29,6 +29,10 @@ import io.bumble.slowdonkey.server.persistence.Offset;
  */
 public class VirtualObserverOfLeader implements VirtualRole {
 
+    public void dataSync() {
+
+    }
+
     public Offset getCommitOffset() {
 
 

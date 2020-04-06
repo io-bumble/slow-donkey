@@ -23,11 +23,46 @@ import io.bumble.slowdonkey.common.property.SlowDonkeyProperty;
 import io.bumble.slowdonkey.common.util.SingletonUtil;
 
 /**
+ * Hold all the server properties.
+ *
  * @author shenxiangyu on 2020/04/05
  */
 public class SlowDonkeyServerPropertyHolder extends AbstractSlowDonkeyPropertyHolder {
 
-    private SlowDonkeyProperty dummyProp = SlowDonkeyProperty.builder().key("").value("").build();
+    /**
+     * The timeout config for leader waiting for the response of appending uncommitted log to followers
+     */
+    private SlowDonkeyProperty leaderAppendUncommittedLogToFollowersTimeout =
+            SlowDonkeyProperty.builder().key("bumble.slow.donkey.leaderAppendUncommittedLogToFollowersTimeout")
+                    .value("10000").build();
+
+    /**
+     * Thread pool size for sending data from leader to followers.
+     */
+    private SlowDonkeyProperty leaderDataToFollowerThreadPoolSize =
+            SlowDonkeyProperty.builder().key("bumble.slow.donkey.leaderDataToFollowerThreadPoolSize")
+                    .value("4").build();
+
+    /**
+     * Thread pool size for sending data from leader to observers.
+     */
+    private SlowDonkeyProperty leaderDataToObserverThreadPoolSize =
+            SlowDonkeyProperty.builder().key("bumble.slow.donkey.leaderDataToObserverThreadPoolSize")
+                    .value("4").build();
+
+    /**
+     * Thread pool queue capacity for sending data from leader to followers.
+     */
+    private SlowDonkeyProperty leaderDataToFollowerThreadPoolQueueCapacity =
+            SlowDonkeyProperty.builder().key("bumble.slow.donkey.leaderDataToFollowerThreadPoolQueueCapacity")
+                    .value("100000").build();
+
+    /**
+     * Thread pool queue capacity for sending data from leader to observers.
+     */
+    private SlowDonkeyProperty leaderDataToObserverThreadPoolQueueCapacity =
+            SlowDonkeyProperty.builder().key("bumble.slow.donkey.leaderDataToObserverThreadPoolQueueCapacity")
+                    .value("100000").build();
 
     public SlowDonkeyServerPropertyHolder() {
         super();
@@ -45,5 +80,25 @@ public class SlowDonkeyServerPropertyHolder extends AbstractSlowDonkeyPropertyHo
 
             super.propertyMap.get("key").setValue("");
         }
+    }
+
+    public SlowDonkeyProperty getLeaderAppendUncommittedLogToFollowersTimeout() {
+        return leaderAppendUncommittedLogToFollowersTimeout;
+    }
+
+    public SlowDonkeyProperty getLeaderDataToFollowerThreadPoolSize() {
+        return leaderDataToFollowerThreadPoolSize;
+    }
+
+    public SlowDonkeyProperty getLeaderDataToObserverThreadPoolSize() {
+        return leaderDataToObserverThreadPoolSize;
+    }
+
+    public SlowDonkeyProperty getLeaderDataToFollowerThreadPoolQueueCapacity() {
+        return leaderDataToFollowerThreadPoolQueueCapacity;
+    }
+
+    public SlowDonkeyProperty getLeaderDataToObserverThreadPoolQueueCapacity() {
+        return leaderDataToObserverThreadPoolQueueCapacity;
     }
 }

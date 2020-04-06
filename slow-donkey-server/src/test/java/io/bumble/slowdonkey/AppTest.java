@@ -16,23 +16,23 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.quorum;
+package io.bumble.slowdonkey;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
- * Verify if the current count matches the majority quorum.
- *
- * @author shenxiangyu on 2020/04/05
+ * Unit test for simple App.
  */
-public class QuorumVerifier {
-
+public class AppTest 
+{
     /**
-     * Verify if the current number of count is more than half of the total number of count.
-     *
-     * @param totalCount total number of count, and total number must be singular number as 3, 5, 7...
-     * @param currentCount current number of count
-     * @return if matches the quorum
+     * Rigorous Test :-)
      */
-    public static boolean verify(int totalCount, int currentCount) {
-        return currentCount > (totalCount / 2);
+    @Test
+    public void shouldAnswerWithTrue()
+    {
+        assertTrue( true );
     }
 }

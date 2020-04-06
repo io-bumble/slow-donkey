@@ -18,10 +18,23 @@
 
 package io.bumble.slowdonkey.server.role.virtual;
 
+import io.bumble.slowdonkey.server.model.network.leader2follower.CommitRequest;
+import io.bumble.slowdonkey.server.model.network.leader2follower.CommitResponse;
+import io.bumble.slowdonkey.server.model.network.leader2follower.ProposeRequest;
+import io.bumble.slowdonkey.server.model.network.leader2follower.ProposeResponse;
+
 /**
- * The follower role imagined by the leader object, and all the abilities are defined from the leader's perspective.
+ * The follower role imagined by the leader node, and all the abilities are defined from the leader's perspective.
  *
  * @author shenxiangyu on 2020/03/30
  */
 public class VirtualFollowerOfLeader implements VirtualRole {
+
+    public ProposeResponse propose(ProposeRequest request) {
+        return null;
+    }
+
+    public CommitResponse commit(CommitRequest request) {
+        return null;
+    }
 }

@@ -16,17 +16,13 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.model.network.candidate2candidate;
+package io.bumble.slowdonkey.server.model.network.election;
 
-import io.bumble.slowdonkey.common.model.network.base.Request;
-import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
+import io.bumble.slowdonkey.common.model.network.base.Response;
 
 /**
  * @author shenxiangyu on 2020/04/05
  */
-public class VoteForMyselfRequest extends Request {
+public class VoteResponse extends Response {
 
-    public VoteForMyselfRequest() {
-        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_CANDIDATE_TO_SERVER_ALL);
-    }
 }

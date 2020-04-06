@@ -19,7 +19,7 @@
 package io.bumble.slowdonkey.common.model;
 
 /**
- * Represent a real machine in the cluster as a node
+ * Represent a machine in the cluster as a node
  *
  * @author shenxiangyu on 2020/03/31
  */
@@ -28,43 +28,71 @@ public class Node {
     /**
      * The ip address and port
      */
-    private Host host;
+    private Endpoint endpoint;
 
     public Node() {}
 
-    public Host getHost() {
-        return host;
+    public Endpoint getEndpoint() {
+        return endpoint;
     }
 
-    public void setHost(Host host) {
-        this.host = host;
+    public void setEndpoint(Endpoint endpoint) {
+        this.endpoint = endpoint;
     }
 
     /**
      * IP address and port
      */
-    public class Host {
+    public class Endpoint {
+
+        private String endpoint;
 
         private String ip;
 
         private int port;
 
-        public Host(String ip, int port) {
+        public Endpoint(String endpoint) {
+            this.endpoint = endpoint;
+
+            String[] arr = endpoint.split(":");
+            this.ip = arr[0];
+            this.port = Integer.valueOf(arr[1]);
+        }
+
+        public Endpoint(String ip, int port) {
             this.ip = ip;
             this.port = port;
+
+            this.endpoint = ip + ":" + port;
         }
 
         @Override
         public String toString() {
-            return ip + ":" + port;
+            return endpoint;
+        }
+
+        public String getEndpoint() {
+            return endpoint;
+        }
+
+        public void setEndpoint(String endpoint) {
+            this.endpoint = endpoint;
         }
 
         public String getIp() {
             return ip;
         }
 
+        public void setIp(String ip) {
+            this.ip = ip;
+        }
+
         public int getPort() {
             return port;
+        }
+
+        public void setPort(int port) {
+            this.port = port;
         }
     }
 }

@@ -16,23 +16,22 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.quorum;
+package io.bumble.slowdonkey.server.model.network.leader2follower;
+
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
+import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 
 /**
- * Verify if the current count matches the majority quorum.
- *
- * @author shenxiangyu on 2020/04/05
+ * @author shenxiangyu on 2020/04/06
  */
-public class QuorumVerifier {
+public class ProposeRequest extends Request {
 
-    /**
-     * Verify if the current number of count is more than half of the total number of count.
-     *
-     * @param totalCount total number of count, and total number must be singular number as 3, 5, 7...
-     * @param currentCount current number of count
-     * @return if matches the quorum
-     */
-    public static boolean verify(int totalCount, int currentCount) {
-        return currentCount > (totalCount / 2);
+    public ProposeRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SERVER_OTHER);
+    }
+
+    public static ProposeRequest fromWriteRequest(WriteRequest writeRequest) {
+        return null;
     }
 }

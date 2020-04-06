@@ -16,13 +16,22 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.model.network.candidate2candidate;
+package io.bumble.slowdonkey.server.model.network.leader2follower;
 
-import io.bumble.slowdonkey.common.model.network.base.Response;
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
+import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 
 /**
- * @author shenxiangyu on 2020/04/05
+ * @author shenxiangyu on 2020/04/06
  */
-public class VoteForMyselfResponse extends Response {
+public class CommitRequest extends Request {
 
+    public CommitRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SERVER_OTHER);
+    }
+
+    public static CommitRequest fromWriteRequest(WriteRequest writeRequest) {
+        return null;
+    }
 }

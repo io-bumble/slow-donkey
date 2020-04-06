@@ -30,7 +30,11 @@ public class DataTree {
         return SingletonUtil.getInstance(DataTree.class);
     }
 
-    public void writeUncommittedLog(WriteRequest request) {
+    public boolean appendUncommittedLog(WriteRequest request) {
+        return request == null;
+    }
+
+    public void commit(WriteRequest request) {
 
     }
 

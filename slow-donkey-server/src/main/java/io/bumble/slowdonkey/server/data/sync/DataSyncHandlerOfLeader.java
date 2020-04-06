@@ -21,6 +21,7 @@ package io.bumble.slowdonkey.server.data.sync;
 import io.bumble.slowdonkey.common.model.Node;
 import io.bumble.slowdonkey.common.util.SingletonUtil;
 import io.bumble.slowdonkey.server.data.sync.virtual.VirtualDataSyncLearnerOfLeader;
+import io.bumble.slowdonkey.server.data.write.DataWriteHandlerOfLeader;
 import io.bumble.slowdonkey.server.persistence.CommitLog;
 import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
 import io.bumble.slowdonkey.server.persistence.Offset;
@@ -41,6 +42,8 @@ public class DataSyncHandlerOfLeader extends Node {
 
     private Map<String, VirtualDataSyncLearnerOfLeader> learnerOfLeaderMap;
 
+    private DataWriteHandlerOfLeader dataWriteHandlerOfLeader;
+
     public static DataSyncHandlerOfLeader getInstance() {
         return SingletonUtil.getInstance(DataSyncHandlerOfLeader.class);
     }
@@ -54,13 +57,13 @@ public class DataSyncHandlerOfLeader extends Node {
         }
     }
 
-    public void syncToLearner(String host) {
-        VirtualDataSyncLearnerOfLeader learner = learnerOfLeaderMap.get(host);
+    public void syncToLearner(String endpoint) {
+        VirtualDataSyncLearnerOfLeader learner = learnerOfLeaderMap.get(endpoint);
         if (learner == null) {
-            learner = learnerOfLeaderMap.get(host);
+            learner = learnerOfLeaderMap.get(endpoint);
         }
         if (learner == null) {
-            logger.error("[Data Sync] slave not found from master [{}] to slave [{}]", super.getHost(), host);
+            logger.error("[Data Sync] slave [{}] not found", endpoint);
             return;
         }
         syncToLearner(learner);
@@ -69,7 +72,7 @@ public class DataSyncHandlerOfLeader extends Node {
     public void syncToLearner(VirtualDataSyncLearnerOfLeader learner) {
         Offset offset = learner.getCommitOffset();
         if (offset == null) {
-            logger.error("[Data Sync] get commit offset failed from master [{}] to slave [{}]", super.getHost(), learner.getHost());
+            logger.error("[Data Sync] get slave [{}] commit offset failed", learner.getEndpoint());
             return;
         }
 
@@ -79,7 +82,7 @@ public class DataSyncHandlerOfLeader extends Node {
         for (CommitLogEntry commitLogEntry : commitLogEntries) {
             boolean syncSuccess = learner.sync(commitLogEntry);
             if (!syncSuccess) {
-                logger.error("[Data Sync] sync failed from master [{}] to slave [{}]", super.getHost(), learner.getHost());
+                logger.error("[Data Sync] sync to slave [{}] failed", learner.getEndpoint());
                 return;
             }
         }

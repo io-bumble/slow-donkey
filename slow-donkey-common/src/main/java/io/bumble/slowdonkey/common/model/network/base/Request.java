@@ -23,20 +23,27 @@ import io.bumble.slowdonkey.common.model.Node;
 import java.util.Queue;
 
 /**
+ * The basic network request model.
  *
  * @author shenxiangyu on 2020/03/31
  */
 public class Request {
 
-    private Node.Host orgClientHost;
+    /**
+     * The client side endpoint.
+     */
+    private Node.Endpoint clientEndpoint;
 
-    private Node.Host orgServerHost;
+    /**
+     * The server side endpoint.
+     */
+    private Node.Endpoint serverEndpoint;
 
-    private Node.Host clientHost;
-
-    private Node.Host serverHost;
-
-    private Queue<Node.Host> requestCallStack;
+    /**
+     * If this request need to be redirected, then a new request will be created with its parent request pointing to
+     * this request.
+     */
+    private Request parentRequest;
 
     /**
      * Indicating the request direction
@@ -45,44 +52,28 @@ public class Request {
 
     public Request() {}
 
-    public Node.Host getOrgClientHost() {
-        return orgClientHost;
+    public Node.Endpoint getClientEndpoint() {
+        return clientEndpoint;
     }
 
-    public void setOrgClientHost(Node.Host orgClientHost) {
-        this.orgClientHost = orgClientHost;
+    public void setClientEndpoint(Node.Endpoint clientEndpoint) {
+        this.clientEndpoint = clientEndpoint;
     }
 
-    public Node.Host getOrgServerHost() {
-        return orgServerHost;
+    public Node.Endpoint getServerEndpoint() {
+        return serverEndpoint;
     }
 
-    public void setOrgServerHost(Node.Host orgServerHost) {
-        this.orgServerHost = orgServerHost;
+    public void setServerEndpoint(Node.Endpoint serverEndpoint) {
+        this.serverEndpoint = serverEndpoint;
     }
 
-    public Node.Host getClientHost() {
-        return clientHost;
+    public Request getParentRequest() {
+        return parentRequest;
     }
 
-    public void setClientHost(Node.Host clientHost) {
-        this.clientHost = clientHost;
-    }
-
-    public Node.Host getServerHost() {
-        return serverHost;
-    }
-
-    public void setServerHost(Node.Host serverHost) {
-        this.serverHost = serverHost;
-    }
-
-    public Queue<Node.Host> getRequestCallStack() {
-        return requestCallStack;
-    }
-
-    public void setRequestCallStack(Queue<Node.Host> requestCallStack) {
-        this.requestCallStack = requestCallStack;
+    public void setParentRequest(Request parentRequest) {
+        this.parentRequest = parentRequest;
     }
 
     public RequestDirectionEnum getRequestDirectionEnum() {

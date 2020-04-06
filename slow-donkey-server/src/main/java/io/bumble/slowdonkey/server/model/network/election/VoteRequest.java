@@ -16,44 +16,17 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.common.model.network.base;
+package io.bumble.slowdonkey.server.model.network.election;
+
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 
 /**
- * Indicating the request direction, make request clear of showing the original
- * request sender and the destination handler
- *
  * @author shenxiangyu on 2020/04/05
  */
-public enum RequestDirectionEnum {
+public class VoteRequest extends Request {
 
-    /**
-     * Send from the client to the server leader
-     */
-    CLIENT_TO_SERVER_LEADER,
-
-    /**
-     * Send from the client to all the server nodes
-     */
-    CLIENT_TO_SERVER_ALL,
-
-    /**
-     * Send from the leader to all the other server nodes
-     */
-    SERVER_LEADER_TO_SERVER_OTHER,
-
-    /**
-     * Send from the server other nodes to leader
-     */
-    SERVER_OTHER_TO_SERVER_LEADER,
-
-    /**
-     * Send from leader to followers
-     */
-    SERVER_LEADER_TO_SEVER_FOLLOWER,
-
-    /**
-     * Send from the server candidate to all the nodes except the observers
-     */
-    ELECTION,
-    ;
+    public VoteRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.ELECTION);
+    }
 }
