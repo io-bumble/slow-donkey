@@ -20,18 +20,26 @@ package io.bumble.slowdonkey.server.data;
 
 import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 import io.bumble.slowdonkey.common.util.SingletonUtil;
+import io.bumble.slowdonkey.server.persistence.Snapshot;
+import io.bumble.slowdonkey.server.persistence.TxnLog;
 
 /**
  * @author shenxiangyu on 2020/03/31
  */
 public class DataTree {
 
+    private Snapshot snapshot;
+
     public static DataTree getInstance() {
         return SingletonUtil.getInstance(DataTree.class);
     }
 
-    public boolean appendUncommittedLog(WriteRequest request) {
+    public boolean appendTxnLog(WriteRequest request) {
         return request == null;
+    }
+
+    public boolean appendTxnLog(TxnLog txnLog) {
+        return false;
     }
 
     public void commit(WriteRequest request) {
@@ -40,5 +48,9 @@ public class DataTree {
 
     public void read() {
 
+    }
+
+    public Snapshot getSnapshot() {
+        return snapshot;
     }
 }

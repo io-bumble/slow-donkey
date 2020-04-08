@@ -16,18 +16,23 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.model.network.oth2leader;
+package io.bumble.slowdonkey.server.model.network.learner2leader;
 
 import io.bumble.slowdonkey.common.model.network.base.Request;
 import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
-import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
 
 /**
+ * Get the transaction logs from the snapshot last transaction id position.
+ *
  * @author shenxiangyu on 2020/03/31
  */
-public class DataSyncApplyRequest extends Request {
+public class TxnLogSyncRequest extends Request {
 
-    public DataSyncApplyRequest() {
-        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_OTHER_TO_SERVER_LEADER);
+    private String lastTxnId;
+
+    public TxnLogSyncRequest(String lastTxnId) {
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEARNER_TO_SERVER_LEADER);
+
+        this.lastTxnId = lastTxnId;
     }
 }

@@ -16,10 +16,20 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.data.write;
+package io.bumble.slowdonkey.server.persistence;
+
+import java.util.List;
 
 /**
- * @author shenxiangyu on 2020/04/05
+ * @author shenxiangyu on 2020/03/31
  */
-public class DataWriteHandlerOfFollower {
+public class TxnLogFile {
+
+    public boolean hasUncommittedEntry() {
+        return false;
+    }
+
+    public List<TxnLogEntry> getEntriesFromOffset(long offset) {
+        return null;
+    }
 }

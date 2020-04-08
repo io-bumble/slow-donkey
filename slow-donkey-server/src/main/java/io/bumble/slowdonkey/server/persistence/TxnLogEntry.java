@@ -16,20 +16,20 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.common.model.network.client2server;
-
-import io.bumble.slowdonkey.common.model.network.base.Request;
-import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
+package io.bumble.slowdonkey.server.persistence;
 
 /**
- * Client read data from leader, if a server node which is not a leader receives this request then the request will be
- * redirected to the server leader to read the data.
- *
- * @author shenxiangyu on 2020/04/05
+ * @author shenxiangyu on 2020/03/31
  */
-public class StrictReadRequest extends Request {
+public class TxnLogEntry {
 
-    public StrictReadRequest() {
-        super.setRequestDirectionEnum(RequestDirectionEnum.CLIENT_TO_SERVER_LEADER);
+    private Offset offset;
+
+    public Offset getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Offset offset) {
+        this.offset = offset;
     }
 }

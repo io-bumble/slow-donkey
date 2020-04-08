@@ -22,6 +22,9 @@ import io.bumble.slowdonkey.common.model.network.base.Request;
 import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 
 /**
+ * The data write will be processed by the leader, if a server which is not a leader receives this request, then the
+ * request will be redirected to the leader.
+ *
  * @author shenxiangyu on 2020/04/04
  */
 public class WriteRequest extends Request {

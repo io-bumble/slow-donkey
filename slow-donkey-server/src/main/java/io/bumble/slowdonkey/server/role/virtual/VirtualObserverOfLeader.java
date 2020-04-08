@@ -18,16 +18,17 @@
 
 package io.bumble.slowdonkey.server.role.virtual;
 
+import io.bumble.slowdonkey.common.model.Node;
 import io.bumble.slowdonkey.common.remoting.TransportClient;
-import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncRequest;
-import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncResponse;
-import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
+import io.bumble.slowdonkey.server.model.network.leader2observer.DataSyncRequest;
+import io.bumble.slowdonkey.server.model.network.leader2observer.DataSyncResponse;
 import io.bumble.slowdonkey.server.persistence.Offset;
+import io.bumble.slowdonkey.server.persistence.TxnLogEntry;
 
 /**
  * @author shenxiangyu on 2020/04/05
  */
-public class VirtualObserverOfLeader implements VirtualRole {
+public class VirtualObserverOfLeader extends Node implements VirtualRole {
 
     public void dataSync() {
 
@@ -39,11 +40,9 @@ public class VirtualObserverOfLeader implements VirtualRole {
         return null;
     }
 
-    public boolean sync(CommitLogEntry commitLogEntry) {
+    public boolean sync(TxnLogEntry txnLogEntry) {
 
-        // Send data sync request to TODO
-
-        DataSyncResponse response = TransportClient.getInstance().syncRequest(new DataSyncRequest(commitLogEntry));
+        DataSyncResponse response = TransportClient.getInstance().syncRequest(new DataSyncRequest());
 
         return response.isSuccess();
     }

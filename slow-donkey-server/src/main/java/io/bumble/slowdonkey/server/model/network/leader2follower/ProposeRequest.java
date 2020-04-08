@@ -28,7 +28,7 @@ import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 public class ProposeRequest extends Request {
 
     public ProposeRequest() {
-        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SERVER_OTHER);
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SEVER_FOLLOWER);
     }
 
     public static ProposeRequest fromWriteRequest(WriteRequest writeRequest) {

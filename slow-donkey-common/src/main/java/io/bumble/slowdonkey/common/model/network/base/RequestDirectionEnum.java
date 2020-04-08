@@ -27,32 +27,33 @@ package io.bumble.slowdonkey.common.model.network.base;
 public enum RequestDirectionEnum {
 
     /**
-     * Send from the client to the server leader
+     * Client sends request to the server leader. If the request is sent to a server node
+     * which is not a leader, then the request will be redirected to the leader.
      */
     CLIENT_TO_SERVER_LEADER,
 
     /**
-     * Send from the client to all the server nodes
+     * Client sends request to any one of the server nodes regardless its role.
      */
-    CLIENT_TO_SERVER_ALL,
+    CLIENT_TO_SERVER_ANY,
 
     /**
-     * Send from the leader to all the other server nodes
-     */
-    SERVER_LEADER_TO_SERVER_OTHER,
-
-    /**
-     * Send from the server other nodes to leader
-     */
-    SERVER_OTHER_TO_SERVER_LEADER,
-
-    /**
-     * Send from leader to followers
+     * Server leader sends request to server follower.
      */
     SERVER_LEADER_TO_SEVER_FOLLOWER,
 
     /**
-     * Send from the server candidate to all the nodes except the observers
+     * Server leader sends request to server observer.
+     */
+    SERVER_LEADER_TO_SERVER_OBSERVER,
+
+    /**
+     * Server learner sends request to server leader.
+     */
+    SERVER_LEARNER_TO_SERVER_LEADER,
+
+    /**
+     * Sever candidate sends request to all the server nodes except the observers.
      */
     ELECTION,
     ;

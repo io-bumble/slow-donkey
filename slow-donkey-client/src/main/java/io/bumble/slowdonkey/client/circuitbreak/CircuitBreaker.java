@@ -16,17 +16,10 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.model.network.leader2oth;
-
-import io.bumble.slowdonkey.common.model.network.base.Request;
-import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
+package io.bumble.slowdonkey.client.circuitbreak;
 
 /**
- * @author shenxiangyu on 2020/04/04
+ * @author shenxiangyu on 2020/04/08
  */
-public class ServerLeaderHeartBeatRequest extends Request {
-
-    public ServerLeaderHeartBeatRequest() {
-        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SERVER_OTHER);
-    }
+public class CircuitBreaker {
 }

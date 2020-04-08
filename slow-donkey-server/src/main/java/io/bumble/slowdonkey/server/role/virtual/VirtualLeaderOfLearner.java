@@ -18,6 +18,7 @@
 
 package io.bumble.slowdonkey.server.role.virtual;
 
+import io.bumble.slowdonkey.common.model.Node;
 import io.bumble.slowdonkey.common.model.network.base.Request;
 import io.bumble.slowdonkey.common.model.network.base.Response;
 import io.bumble.slowdonkey.common.remoting.TransportClient;
@@ -27,9 +28,12 @@ import io.bumble.slowdonkey.common.remoting.TransportClient;
  *
  * @author shenxiangyu on 2020/04/05
  */
-public class VirtualLeaderOfLearner implements VirtualRole {
+public class VirtualLeaderOfLearner extends Node implements VirtualRole {
 
     public <T extends Request, R extends Response> R redirectRequestToLeader(T request) {
+
+        request.redirectServerEndpoint(this.getEndpoint());
+
         return TransportClient.getInstance().syncRequest(request);
     }
 }

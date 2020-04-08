@@ -16,12 +16,11 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.common.model.network.client2server;
-
-import io.bumble.slowdonkey.common.model.network.base.Response;
+package io.bumble.slowdonkey.client.loadbalance;
 
 /**
- * @author shenxiangyu on 2020/04/04
+ * @author shenxiangyu on 2020/04/07
  */
-public class HighConcurrentReadResponse extends Response {
+public class RoundRobinLoadBalancer {
+
 }

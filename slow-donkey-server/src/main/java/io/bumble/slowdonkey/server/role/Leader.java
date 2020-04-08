@@ -22,7 +22,7 @@ import io.bumble.slowdonkey.common.model.network.base.Request;
 import io.bumble.slowdonkey.common.model.network.base.Response;
 import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 import io.bumble.slowdonkey.server.LifeCycle;
-import io.bumble.slowdonkey.server.data.write.DataWriteHandlerOfLeader;
+import io.bumble.slowdonkey.server.data.handler.DataWriteHandlerOfLeader;
 import io.bumble.slowdonkey.server.model.Vote;
 import io.bumble.slowdonkey.server.role.virtual.VirtualFollowerOfLeader;
 import io.bumble.slowdonkey.server.role.virtual.VirtualObserverOfLeader;

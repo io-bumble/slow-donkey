@@ -16,16 +16,10 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.data.sync;
-
-import io.bumble.slowdonkey.common.util.SingletonUtil;
+package io.bumble.slowdonkey.server.data.handler;
 
 /**
- * @author shenxiangyu on 2020/03/31
+ * @author shenxiangyu on 2020/04/05
  */
-public class DataSyncHandlerOfLearner {
-
-    public static DataSyncHandlerOfLearner getInstance() {
-        return SingletonUtil.getInstance(DataSyncHandlerOfLearner.class);
-    }
+public class DataWriteHandlerOfFollower {
 }

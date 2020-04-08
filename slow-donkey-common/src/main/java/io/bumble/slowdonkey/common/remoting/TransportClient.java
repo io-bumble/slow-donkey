@@ -32,6 +32,12 @@ public class TransportClient {
     }
 
     public <T extends Request, V extends Response> V syncRequest(T request) {
+
+        return null;
+    }
+
+    public <T extends Request, V extends Response> V retrySyncRequest(T request) {
+
         return null;
     }
 }

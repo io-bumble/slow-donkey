@@ -16,14 +16,32 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.model.network.leader2oth;
+package io.bumble.slowdonkey.server.model.network.learner2leader;
 
 import io.bumble.slowdonkey.common.model.network.base.Response;
 
 /**
  * @author shenxiangyu on 2020/03/31
  */
-public class DataSyncResponse extends Response {
+public class SnapshotReplicateResponse extends Response {
 
-    public DataSyncResponse() {}
+    private boolean identical;
+
+    private byte[] data;
+
+    public boolean isIdentical() {
+        return identical;
+    }
+
+    public void setIdentical(boolean identical) {
+        this.identical = identical;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
 }

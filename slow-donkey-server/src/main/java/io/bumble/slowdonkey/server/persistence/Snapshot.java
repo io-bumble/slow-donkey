@@ -22,4 +22,32 @@ package io.bumble.slowdonkey.server.persistence;
  * @author shenxiangyu on 2020/03/31
  */
 public class Snapshot {
+
+    private String md5;
+
+    private String lastTxnId;
+
+    public void deserialize(byte[] bytes) {
+
+    }
+
+    public byte[] serialize() {
+        return null;
+    }
+
+    public String getMd5() {
+        return null;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public String getLastTxnId() {
+        return lastTxnId;
+    }
+
+    public void setLastTxnId(String lastTxnId) {
+        this.lastTxnId = lastTxnId;
+    }
 }

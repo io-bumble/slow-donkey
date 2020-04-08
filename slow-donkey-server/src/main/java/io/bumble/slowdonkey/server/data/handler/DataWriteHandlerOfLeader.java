@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.data.write;
+package io.bumble.slowdonkey.server.data.handler;
 
 import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 import io.bumble.slowdonkey.common.model.network.client2server.WriteResponse;
@@ -72,8 +72,9 @@ public class DataWriteHandlerOfLeader {
 
     /**
      * Write data.
-     * Append uncommitted log to all the followers.
-     * If half of the followers append the uncommitted log successfully, then send commit request to all the followers.
+     * Append uncommitted transaction log to all the followers.
+     * If half of the followers append the uncommitted transaction log successfully, then send commit request to all
+     * the followers.
      *
      * @param request write data request
      * @param followerList followers
@@ -85,19 +86,19 @@ public class DataWriteHandlerOfLeader {
                                List<VirtualObserverOfLeader> observerList) {
         String errMsg;
 
-        // 1. Append uncommitted log to the data tree and flush to the commit log.
-        if (!DataTree.getInstance().appendUncommittedLog(request)) {
-            errMsg = "Leader append uncommitted log failed";
+        // 1. Append uncommitted transaction log to the data tree and flush to the transaction log.
+        if (!DataTree.getInstance().appendTxnLog(request)) {
+            errMsg = "Leader append uncommitted transaction log failed";
             logger.error(errMsg);
             return WriteResponse.renderResponse(false, errMsg);
         }
 
-        // 2. Send [append uncommitted log] request to all the followers.
+        // 2. Send propose request to all the followers.
         //    Thread waits until quorum of followers response successfully.
         boolean proposeToFollowersSuccess = proposeToFollowers(request, followerList);
         if (proposeToFollowersSuccess) {
 
-            // 3. Send [commit] request to all the followers asynchronously.
+            // 3. Send commit request to all the followers asynchronously.
             asyncCommitToFollowers(request, followerList);
 
             // 4. Send data replicate request to all the observers asynchronously.
@@ -107,7 +108,7 @@ public class DataWriteHandlerOfLeader {
             return WriteResponse.renderResponse(true);
 
         } else {
-            errMsg = "Followers append uncommitted log failed";
+            errMsg = "Followers append uncommitted transaction log failed";
             logger.error(errMsg);
 
             // 3. Send write fail ack response to the client.
@@ -116,7 +117,7 @@ public class DataWriteHandlerOfLeader {
     }
 
     /**
-     * Append uncommitted log to all the followers
+     * Append uncommitted transaction log to all the followers
      * <pre>
      * 1. Send write request to all the followers asynchronously.
      * 2. Main thread waits for a timeout period with a lock condition.
@@ -129,8 +130,7 @@ public class DataWriteHandlerOfLeader {
      * @param request write data request
      * @param followerList follower list on the leader's perspective
      */
-    private boolean proposeToFollowers(
-            WriteRequest request, List<VirtualFollowerOfLeader> followerList) {
+    private boolean proposeToFollowers(WriteRequest request, List<VirtualFollowerOfLeader> followerList) {
 
         int totalCount = followerList.size();
 

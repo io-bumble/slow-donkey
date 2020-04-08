@@ -16,12 +16,25 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.model.network.leader2oth;
+package io.bumble.slowdonkey.server.model.network.learner2leader;
 
 import io.bumble.slowdonkey.common.model.network.base.Response;
+import io.bumble.slowdonkey.server.persistence.TxnLog;
+
+import java.util.List;
 
 /**
- * @author shenxiangyu on 2020/04/04
+ * @author shenxiangyu on 2020/03/31
  */
-public class ServerLeaderHeartBeatResponse extends Response {
+public class TxnLogSyncResponse extends Response {
+
+    private List<TxnLog> txnLogList;
+
+    public List<TxnLog> getTxnLogList() {
+        return txnLogList;
+    }
+
+    public void setTxnLogList(List<TxnLog> txnLogList) {
+        this.txnLogList = txnLogList;
+    }
 }

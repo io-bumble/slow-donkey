@@ -18,6 +18,7 @@
 
 package io.bumble.slowdonkey.server.role.virtual;
 
+import io.bumble.slowdonkey.common.model.Node;
 import io.bumble.slowdonkey.server.model.network.leader2follower.CommitRequest;
 import io.bumble.slowdonkey.server.model.network.leader2follower.CommitResponse;
 import io.bumble.slowdonkey.server.model.network.leader2follower.ProposeRequest;
@@ -28,9 +29,10 @@ import io.bumble.slowdonkey.server.model.network.leader2follower.ProposeResponse
  *
  * @author shenxiangyu on 2020/03/30
  */
-public class VirtualFollowerOfLeader implements VirtualRole {
+public class VirtualFollowerOfLeader extends Node implements VirtualRole {
 
     public ProposeResponse propose(ProposeRequest request) {
+
         return null;
     }
 

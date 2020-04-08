@@ -45,14 +45,14 @@ public class Node {
      */
     public class Endpoint {
 
-        private String endpoint;
+        private String value;
 
         private String ip;
 
         private int port;
 
         public Endpoint(String endpoint) {
-            this.endpoint = endpoint;
+            this.value = endpoint;
 
             String[] arr = endpoint.split(":");
             this.ip = arr[0];
@@ -63,20 +63,20 @@ public class Node {
             this.ip = ip;
             this.port = port;
 
-            this.endpoint = ip + ":" + port;
+            this.value = ip + ":" + port;
         }
 
         @Override
         public String toString() {
-            return endpoint;
+            return value;
         }
 
-        public String getEndpoint() {
-            return endpoint;
+        public String getValue() {
+            return value;
         }
 
-        public void setEndpoint(String endpoint) {
-            this.endpoint = endpoint;
+        public void setValue(String value) {
+            this.value = value;
         }
 
         public String getIp() {

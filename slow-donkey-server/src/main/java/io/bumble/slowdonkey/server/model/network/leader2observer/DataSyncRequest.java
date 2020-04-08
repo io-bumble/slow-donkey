@@ -16,32 +16,19 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.data.sync.virtual;
+package io.bumble.slowdonkey.server.model.network.leader2observer;
 
-import io.bumble.slowdonkey.common.model.Node;
-import io.bumble.slowdonkey.common.remoting.TransportClient;
-import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncRequest;
-import io.bumble.slowdonkey.server.model.network.leader2oth.DataSyncResponse;
-import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
-import io.bumble.slowdonkey.server.persistence.Offset;
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 
 /**
+ * The leader sends data sync request to observers.
+ *
  * @author shenxiangyu on 2020/03/31
  */
-public class VirtualDataSyncLearnerOfLeader extends Node {
+public class DataSyncRequest extends Request {
 
-    public Offset getCommitOffset() {
-
-
-        return null;
-    }
-
-    public boolean sync(CommitLogEntry commitLogEntry) {
-
-        // Send data sync request to TODO
-
-        DataSyncResponse response = TransportClient.getInstance().syncRequest(new DataSyncRequest(commitLogEntry));
-
-        return response.isSuccess();
+    public DataSyncRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SERVER_OBSERVER);
     }
 }

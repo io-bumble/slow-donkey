@@ -27,10 +27,18 @@ import java.util.function.Function;
 public class SlowDonkeyClient {
 
     List<String> getChildPathList(String path) {
-        return null;
+        return getChildPathList(path, true);
     }
 
     String read(String path) {
+        return read(path, true);
+    }
+
+    List<String> getChildPathList(String path, boolean strict) {
+        return null;
+    }
+
+    String read(String path, boolean strict) {
         return null;
     }
 

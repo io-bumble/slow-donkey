@@ -18,8 +18,10 @@
 
 package io.bumble.slowdonkey.server;
 
+import io.bumble.slowdonkey.common.model.Node;
 import io.bumble.slowdonkey.common.model.network.base.Request;
 import io.bumble.slowdonkey.common.model.network.base.Response;
+import io.bumble.slowdonkey.common.model.network.client2server.StrictReadRequest;
 import io.bumble.slowdonkey.common.util.SingletonUtil;
 import io.bumble.slowdonkey.server.role.Candidate;
 import io.bumble.slowdonkey.server.role.Follower;
@@ -36,12 +38,14 @@ import io.bumble.slowdonkey.server.role.Role;
  *       |  `-----------          v
  *       `------------------------
  *
- *     observer role is a delicate role fixed right there for supporting more client concurrent read
+ *     Observer role is a delicate role fixed right there for supporting high concurrent read.
+ *     The high concurrent read has weakness that the data read may be an out of date data.
+ *     Please refer to {@link StrictReadRequest} for details.
  * </pre>
  *
  * @author shenxiangyu on 2020/03/30
  */
-public class SlowDonkey implements LifeCycle {
+public class SlowDonkey extends Node implements LifeCycle {
 
     public static SlowDonkey getInstance() {
         return SingletonUtil.getInstance(SlowDonkey.class);

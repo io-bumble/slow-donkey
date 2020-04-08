@@ -16,13 +16,19 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.model.network.oth2leader;
+package io.bumble.slowdonkey.common.model.network.client2server;
 
-import io.bumble.slowdonkey.common.model.network.base.Response;
+import io.bumble.slowdonkey.common.model.network.base.Request;
+import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 
 /**
- * @author shenxiangyu on 2020/03/31
+ * Client will read from a random server no matter the server is a Leader, a follower or an observer.
+ *
+ * @author shenxiangyu on 2020/04/04
  */
-public class DataSyncApplyResponse extends Response {
+public class ReadRequest extends Request {
 
+    public ReadRequest() {
+        super.setRequestDirectionEnum(RequestDirectionEnum.CLIENT_TO_SERVER_ANY);
+    }
 }

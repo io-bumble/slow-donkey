@@ -18,15 +18,10 @@
 
 package io.bumble.slowdonkey.common.model.network.client2server;
 
-import io.bumble.slowdonkey.common.model.network.base.Request;
-import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
+import io.bumble.slowdonkey.common.model.network.base.Response;
 
 /**
  * @author shenxiangyu on 2020/04/04
  */
-public class HighConcurrentReadRequest extends Request {
-
-    public HighConcurrentReadRequest() {
-        super.setRequestDirectionEnum(RequestDirectionEnum.CLIENT_TO_SERVER_ALL);
-    }
+public class ReadResponse extends Response {
 }

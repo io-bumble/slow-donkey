@@ -20,7 +20,8 @@ package io.bumble.slowdonkey.common.model.network.base;
 
 import io.bumble.slowdonkey.common.model.Node;
 
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The basic network request model.
@@ -40,10 +41,22 @@ public class Request {
     private Node.Endpoint serverEndpoint;
 
     /**
-     * If this request need to be redirected, then a new request will be created with its parent request pointing to
-     * this request.
+     * <pre>
+     * 1. If the request is called from client1 endpoint1 to server1 endpoint2
+     *      client1 : callStack is [endpoint1, endpoint2]
+     *      server1 : callStack is [endpoint1, endpoint2]
+     *
+     * 2. If the request is called from client1 endpoint1 to server endpoint2 and redirected to server endpoint3
+     *      client1 : callStack is [endpoint1, endpoint2]
+     *      server1 : callStack is [endpoint1, endpoint2]
+     *                        |
+     *                        | changed
+     *                        v
+     *                callStack is [endpoint1, endpoint2, endpoint3]
+     *      server2 : callStack is [endpoint1, endpoint2, endpoint3]
+     * </pre>
      */
-    private Request parentRequest;
+    private List<Node.Endpoint> callStack = new ArrayList<>();
 
     /**
      * Indicating the request direction
@@ -51,6 +64,19 @@ public class Request {
     private RequestDirectionEnum requestDirectionEnum;
 
     public Request() {}
+
+    public Request(Node.Endpoint clientEndpoint, Node.Endpoint serverEndpoint) {
+        this.setClientEndpoint(clientEndpoint);
+        this.setServerEndpoint(serverEndpoint);
+
+        callStack.add(clientEndpoint);
+        callStack.add(serverEndpoint);
+    }
+
+    public void redirectServerEndpoint(Node.Endpoint endpoint) {
+        this.setServerEndpoint(endpoint);
+        callStack.add(endpoint);
+    }
 
     public Node.Endpoint getClientEndpoint() {
         return clientEndpoint;
@@ -68,12 +94,12 @@ public class Request {
         this.serverEndpoint = serverEndpoint;
     }
 
-    public Request getParentRequest() {
-        return parentRequest;
+    public List<Node.Endpoint> getCallStack() {
+        return callStack;
     }
 
-    public void setParentRequest(Request parentRequest) {
-        this.parentRequest = parentRequest;
+    public void setCallStack(List<Node.Endpoint> callStack) {
+        this.callStack = callStack;
     }
 
     public RequestDirectionEnum getRequestDirectionEnum() {

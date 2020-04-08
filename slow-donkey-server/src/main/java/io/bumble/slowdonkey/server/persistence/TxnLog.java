@@ -18,18 +18,27 @@
 
 package io.bumble.slowdonkey.server.persistence;
 
+import io.bumble.slowdonkey.common.util.SingletonUtil;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author shenxiangyu on 2020/03/31
  */
-public class CommitLogEntry {
+public class TxnLog {
 
-    private Offset offset;
+    private Map<Long, TxnLogFile> txnLogFileMap;
 
-    public Offset getOffset() {
-        return offset;
+    public static TxnLog getInstance() {
+        return SingletonUtil.getInstance(TxnLog.class);
     }
 
-    public void setOffset(Offset offset) {
-        this.offset = offset;
+    public List<TxnLogEntry> getCommittedEntryListFromOffset(Offset offset) {
+
+        // Locate the transaction log file by the file offset
+        TxnLogFile commitLogFile = txnLogFileMap.get(offset.getFileOffset());
+
+        return commitLogFile.getEntriesFromOffset(offset.getEntryOffset());
     }
 }

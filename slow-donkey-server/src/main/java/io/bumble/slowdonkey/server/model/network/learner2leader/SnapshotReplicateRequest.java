@@ -16,32 +16,34 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.model.network.leader2oth;
+package io.bumble.slowdonkey.server.model.network.learner2leader;
 
 import io.bumble.slowdonkey.common.model.network.base.Request;
 import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
-import io.bumble.slowdonkey.server.persistence.CommitLogEntry;
 
 /**
- * @author shenxiangyu on 2020/03/31
+ * A server node which is not leader sends request to leader to get leader snapshot data.
+ * If there is an existing snapshot in this server, pass the md5 to the leader, and the leader will verify the incoming
+ * md5 and the md5 of leader snapshot, if they are different the leader snapshot will be returned, otherwise a identical
+ * flag will be returned.
+ *
+ * @author shenxiangyu on 2020/04/08
  */
-public class DataSyncRequest extends Request {
+public class SnapshotReplicateRequest extends Request {
 
-    private CommitLogEntry commitLogEntry;
+    private String snapshotMd5;
 
-    public DataSyncRequest() {
-        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SERVER_OTHER);
+    public SnapshotReplicateRequest(String snapshotMd5) {
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEARNER_TO_SERVER_LEADER);
+
+        this.snapshotMd5 = snapshotMd5;
     }
 
-    public DataSyncRequest(CommitLogEntry commitLogEntry) {
-        this.commitLogEntry = commitLogEntry;
+    public String getSnapshotMd5() {
+        return snapshotMd5;
     }
 
-    public CommitLogEntry getCommitLogEntry() {
-        return commitLogEntry;
-    }
-
-    public void setCommitLogEntry(CommitLogEntry commitLogEntry) {
-        this.commitLogEntry = commitLogEntry;
+    public void setSnapshotMd5(String snapshotMd5) {
+        this.snapshotMd5 = snapshotMd5;
     }
 }

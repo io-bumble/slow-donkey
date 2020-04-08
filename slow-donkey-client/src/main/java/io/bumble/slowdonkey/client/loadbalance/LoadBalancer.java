@@ -16,20 +16,12 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.persistence;
-
-import java.util.List;
+package io.bumble.slowdonkey.client.loadbalance;
 
 /**
- * @author shenxiangyu on 2020/03/31
+ *
+ *
+ * @author shenxiangyu on 2020/04/07
  */
-public class CommitLogFile {
-
-    public boolean hasUncommittedEntry() {
-        return false;
-    }
-
-    public List<CommitLogEntry> getEntriesFromOffset(long offset) {
-        return null;
-    }
+public interface LoadBalancer {
 }

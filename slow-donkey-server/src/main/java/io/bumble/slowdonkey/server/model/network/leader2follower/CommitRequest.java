@@ -28,7 +28,7 @@ import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 public class CommitRequest extends Request {
 
     public CommitRequest() {
-        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SERVER_OTHER);
+        super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEADER_TO_SEVER_FOLLOWER);
     }
 
     public static CommitRequest fromWriteRequest(WriteRequest writeRequest) {

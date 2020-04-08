@@ -16,29 +16,10 @@
  * limitations under the License.
  */
 
-package io.bumble.slowdonkey.server.persistence;
-
-import io.bumble.slowdonkey.common.util.SingletonUtil;
-
-import java.util.List;
-import java.util.Map;
+package io.bumble.slowdonkey.client.loadbalance;
 
 /**
- * @author shenxiangyu on 2020/03/31
+ * @author shenxiangyu on 2020/04/08
  */
-public class CommitLog {
-
-    private Map<Long, CommitLogFile> commitLogFileMap;
-
-    public static CommitLog getInstance() {
-        return SingletonUtil.getInstance(CommitLog.class);
-    }
-
-    public List<CommitLogEntry> getCommittedEntryListFromOffset(Offset offset) {
-
-        // Locate the commit log file by the file offset
-        CommitLogFile commitLogFile = commitLogFileMap.get(offset.getFileOffset());
-
-        return commitLogFile.getEntriesFromOffset(offset.getEntryOffset());
-    }
+public class AccumulateResponseTimeLoadBalancer {
 }
