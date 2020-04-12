@@ -23,8 +23,8 @@ import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
 
 /**
  * A server node which is not leader sends request to leader to get leader snapshot data.
- * If there is an existing snapshot in this server, pass the md5 to the leader, and the leader will verify the incoming
- * md5 and the md5 of leader snapshot, if they are different the leader snapshot will be returned, otherwise a identical
+ * If there is an existing snapshot on this server, pass the md5 to the leader, and the leader will verify the incoming
+ * md5 and the md5 of leader snapshot, if they are different the leader snapshot will be returned, otherwise an identical
  * flag will be returned.
  *
  * @author shenxiangyu on 2020/04/08

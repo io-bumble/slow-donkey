@@ -18,39 +18,52 @@
 
 package io.bumble.slowdonkey.server.data;
 
-import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 import io.bumble.slowdonkey.common.util.SingletonUtil;
-import io.bumble.slowdonkey.server.persistence.Snapshot;
-import io.bumble.slowdonkey.server.persistence.TxnLog;
+import io.bumble.slowdonkey.server.persistence.TxnLogEntry;
+
+import java.util.List;
 
 /**
  * @author shenxiangyu on 2020/03/31
  */
 public class DataTree {
 
-    private Snapshot snapshot;
-
     public static DataTree getInstance() {
         return SingletonUtil.getInstance(DataTree.class);
     }
 
-    public boolean appendTxnLog(WriteRequest request) {
-        return request == null;
-    }
-
-    public boolean appendTxnLog(TxnLog txnLog) {
+    public boolean update(TxnLogEntry txnLogEntry) {
         return false;
     }
 
-    public void commit(WriteRequest request) {
-
+    /**
+     * Recover the data tree from bytes array.
+     *
+     * @param bytes bytes array
+     * @return true for success
+     */
+    public boolean fromBytes(byte[] bytes) {
+        return false;
     }
 
-    public void read() {
-
+    /**
+     * Serialize the data tree to data bytes array.
+     *
+     * @return serialized bytes array.
+     */
+    public byte[] toBytes() {
+        return null;
     }
 
-    public Snapshot getSnapshot() {
-        return snapshot;
+    public long getLastTxnId() {
+        return 0;
+    }
+
+    public String getData(String path) {
+        return null;
+    }
+
+    public List<String> getChildPathList(String path) {
+        return null;
     }
 }

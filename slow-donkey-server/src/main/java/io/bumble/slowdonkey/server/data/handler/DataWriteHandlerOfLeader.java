@@ -22,7 +22,8 @@ import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
 import io.bumble.slowdonkey.common.model.network.client2server.WriteResponse;
 import io.bumble.slowdonkey.common.thread.ThreadPoolExecutorGenerator;
 import io.bumble.slowdonkey.common.util.SingletonUtil;
-import io.bumble.slowdonkey.server.data.DataTree;
+import io.bumble.slowdonkey.server.SlowDonkey;
+import io.bumble.slowdonkey.server.data.SlowDonkeyDatabase;
 import io.bumble.slowdonkey.server.model.network.leader2follower.CommitRequest;
 import io.bumble.slowdonkey.server.model.network.leader2follower.ProposeRequest;
 import io.bumble.slowdonkey.server.model.network.leader2follower.ProposeResponse;
@@ -87,7 +88,7 @@ public class DataWriteHandlerOfLeader {
         String errMsg;
 
         // 1. Append uncommitted transaction log to the data tree and flush to the transaction log.
-        if (!DataTree.getInstance().appendTxnLog(request)) {
+        if (!SlowDonkeyDatabase.getInstance().propose(request)) {
             errMsg = "Leader append uncommitted transaction log failed";
             logger.error(errMsg);
             return WriteResponse.renderResponse(false, errMsg);
@@ -101,10 +102,20 @@ public class DataWriteHandlerOfLeader {
             // 3. Send commit request to all the followers asynchronously.
             asyncCommitToFollowers(request, followerList);
 
-            // 4. Send data replicate request to all the observers asynchronously.
+            // 4. Commit the request
+            boolean commitSuccess = SlowDonkeyDatabase.getInstance().commit(request);
+            if (!commitSuccess) {
+                logger.error("Stop leading, wait for new leader.");
+
+                SlowDonkey.getInstance().stop();
+
+                return WriteResponse.renderResponse(true);
+            }
+
+            // 5. Send data replicate request to all the observers asynchronously.
             asyncDataReplicateToAllObservers(observerList);
 
-            // 5. Send write success ack response to the client.
+            // 6. Send write success ack response to the client.
             return WriteResponse.renderResponse(true);
 
         } else {

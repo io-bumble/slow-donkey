@@ -22,7 +22,6 @@ import io.bumble.slowdonkey.common.model.Node;
 import io.bumble.slowdonkey.common.remoting.TransportClient;
 import io.bumble.slowdonkey.server.model.network.leader2observer.DataSyncRequest;
 import io.bumble.slowdonkey.server.model.network.leader2observer.DataSyncResponse;
-import io.bumble.slowdonkey.server.persistence.Offset;
 import io.bumble.slowdonkey.server.persistence.TxnLogEntry;
 
 /**
@@ -34,10 +33,9 @@ public class VirtualObserverOfLeader extends Node implements VirtualRole {
 
     }
 
-    public Offset getCommitOffset() {
+    public long getCommitOffset() {
 
-
-        return null;
+        return 0;
     }
 
     public boolean sync(TxnLogEntry txnLogEntry) {

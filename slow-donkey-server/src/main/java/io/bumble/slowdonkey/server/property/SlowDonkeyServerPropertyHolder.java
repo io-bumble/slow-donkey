@@ -64,6 +64,20 @@ public class SlowDonkeyServerPropertyHolder extends AbstractSlowDonkeyPropertyHo
             SlowDonkeyProperty.builder().key("bumble.slow.donkey.leaderDataToObserverThreadPoolQueueCapacity")
                     .value("100000").build();
 
+    /**
+     * File directory for snapshot files.
+     */
+    private SlowDonkeyProperty snapshotFilePath =
+            SlowDonkeyProperty.builder().key("bumble.slow.donkey.snapshotFilePath")
+                    .value("/usr/local/var/slow-donkey/data/snapshot").build();
+
+    /**
+     * File directory for transaction logs.
+     */
+    private SlowDonkeyProperty txnLogFilePath =
+            SlowDonkeyProperty.builder().key("bumble.slow.donkey.txnLogFilePath")
+                    .value("/usr/local/var/slow-donkey/data/txn-log").build();
+
     public SlowDonkeyServerPropertyHolder() {
         super();
     }

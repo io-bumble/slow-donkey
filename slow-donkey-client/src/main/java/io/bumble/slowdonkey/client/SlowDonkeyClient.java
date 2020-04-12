@@ -30,20 +30,28 @@ public class SlowDonkeyClient {
         return getChildPathList(path, true);
     }
 
-    String read(String path) {
-        return read(path, true);
+    String getData(String path) {
+        return getData(path, true);
     }
 
     List<String> getChildPathList(String path, boolean strict) {
         return null;
     }
 
-    String read(String path, boolean strict) {
+    String getData(String path, boolean strict) {
         return null;
     }
 
-    void write(String path, String value) {
+    boolean writeData(String path, String value) {
+        return createPath(path, value);
+    }
 
+    boolean createPath(String path) {
+        return createPath(path, null);
+    }
+
+    boolean createPath(String path, String value) {
+        return false;
     }
 
     void listenOn(String path, Function function) {

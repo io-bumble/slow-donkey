@@ -18,18 +18,28 @@
 
 package io.bumble.slowdonkey.server.persistence;
 
+import io.bumble.slowdonkey.common.model.network.client2server.WriteRequest;
+
 /**
  * @author shenxiangyu on 2020/03/31
  */
 public class TxnLogEntry {
 
-    private Offset offset;
+    private long offset;
 
-    public Offset getOffset() {
+    public static TxnLogEntry getProposalLog(WriteRequest request) {
+        return null;
+    }
+
+    public static TxnLogEntry getCommitLog(WriteRequest request) {
+        return null;
+    }
+
+    public long getOffset() {
         return offset;
     }
 
-    public void setOffset(Offset offset) {
+    public void setOffset(long offset) {
         this.offset = offset;
     }
 }

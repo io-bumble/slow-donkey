@@ -19,26 +19,29 @@
 package io.bumble.slowdonkey.server.persistence;
 
 import io.bumble.slowdonkey.common.util.SingletonUtil;
+import io.bumble.slowdonkey.server.data.DataTree;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author shenxiangyu on 2020/03/31
  */
 public class TxnLog {
 
-    private Map<Long, TxnLogFile> txnLogFileMap;
-
     public static TxnLog getInstance() {
         return SingletonUtil.getInstance(TxnLog.class);
     }
 
-    public List<TxnLogEntry> getCommittedEntryListFromOffset(Offset offset) {
+    public List<TxnLogEntry> getCommittedEntryListFromOffset(long offset) {
 
-        // Locate the transaction log file by the file offset
-        TxnLogFile commitLogFile = txnLogFileMap.get(offset.getFileOffset());
+        return null;
+    }
 
-        return commitLogFile.getEntriesFromOffset(offset.getEntryOffset());
+    public boolean replayTransactionsToDataTree(DataTree dataTree) {
+        return false;
+    }
+
+    public boolean append(TxnLogEntry txnLogEntry) {
+        return false;
     }
 }

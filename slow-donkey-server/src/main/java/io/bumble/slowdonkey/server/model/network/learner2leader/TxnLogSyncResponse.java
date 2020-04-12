@@ -19,7 +19,7 @@
 package io.bumble.slowdonkey.server.model.network.learner2leader;
 
 import io.bumble.slowdonkey.common.model.network.base.Response;
-import io.bumble.slowdonkey.server.persistence.TxnLog;
+import io.bumble.slowdonkey.server.persistence.TxnLogEntry;
 
 import java.util.List;
 
@@ -28,13 +28,13 @@ import java.util.List;
  */
 public class TxnLogSyncResponse extends Response {
 
-    private List<TxnLog> txnLogList;
+    private List<TxnLogEntry> txnLogEntryList;
 
-    public List<TxnLog> getTxnLogList() {
-        return txnLogList;
+    public List<TxnLogEntry> getTxnLogEntryList() {
+        return txnLogEntryList;
     }
 
-    public void setTxnLogList(List<TxnLog> txnLogList) {
-        this.txnLogList = txnLogList;
+    public void setTxnLogEntryList(List<TxnLogEntry> txnLogEntryList) {
+        this.txnLogEntryList = txnLogEntryList;
     }
 }
