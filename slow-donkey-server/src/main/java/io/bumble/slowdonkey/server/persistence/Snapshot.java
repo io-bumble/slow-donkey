@@ -20,8 +20,14 @@ package io.bumble.slowdonkey.server.persistence;
 
 import io.bumble.slowdonkey.common.util.SingletonUtil;
 import io.bumble.slowdonkey.server.data.DataTree;
+import io.bumble.slowdonkey.server.property.SlowDonkeyServerPropertyHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The snapshot file name is as `snapshot-{timestamp}.dat`.
@@ -31,9 +37,11 @@ import java.io.*;
  */
 public class Snapshot {
 
+    private Logger logger = LoggerFactory.getLogger(Snapshot.class);
+
     private String md5;
 
-    private String lastTxnId;
+    private long lastTxnId;
 
     public static Snapshot getInstance() {
         return SingletonUtil.getInstance(Snapshot.class);
@@ -45,12 +53,12 @@ public class Snapshot {
      * @param dataTree data tree which will be recovered
      * @return true for success
      */
-    public boolean fromFile(DataTree dataTree) {
+    public boolean loadDataTreeFromSnapshotFile(DataTree dataTree) {
 
-        boolean success;
-        // TODO load all the snapshot files order by timestamp, recover the snapshot.
-        for (int i = 0; i < 10; i ++) {
-            if (fromFile(dataTree, "")) {
+        List<File> snapshotFiles = getSnapshotFiles();
+
+        for (File snapshotFile : snapshotFiles) {
+            if (loadDataTreeFromSnapshotFile(dataTree, snapshotFile.getAbsolutePath())) {
                 return true;
             }
         }
@@ -58,21 +66,22 @@ public class Snapshot {
     }
 
     /**
-     * Save the data tree to snapshot file
+     * Save the data tree to snapshot file.
+     * File name is composed by last transaction id and term e.g. {txnId}-{term}.dat
      *
      * @param dataTree data tree
      * @return true for success
      */
-    public boolean toFile(DataTree dataTree) {
+    public boolean saveDataTreeToSnapshotFile(DataTree dataTree) {
 
-        dataTree.toBytes();
+        String snapshotFileName = dataTree.getLastTxnId() + '-' + dataTree.getTerm() + ".dat";
+        String snapshotFullPathFileName = SlowDonkeyServerPropertyHolder.getInstance().getSnapshotFilePath().getValue() +
+                '/' + snapshotFileName;
 
-        try {
-            OutputStream outputStream = new FileOutputStream("");
-            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+        try (OutputStream outputStream = new FileOutputStream(snapshotFullPathFileName);
+             DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {
 
-            // Write last transaction id
-            dataOutputStream.writeLong(123);
+            // TODO checksum
 
             byte[] bytes = dataTree.toBytes();
 
@@ -82,11 +91,13 @@ public class Snapshot {
             dataOutputStream.writeInt(dataLen);
 
             // Write data tree bytes
-            dataOutputStream.write(dataTree.toBytes());
+            dataOutputStream.write(bytes);
+
+            lastTxnId = dataTree.getLastTxnId();
+
+            return true;
         } catch (IOException e) {
-
-        } finally {
-
+            logger.error("Save data tree to snapshot file failed.", e);
         }
         return false;
     }
@@ -99,21 +110,28 @@ public class Snapshot {
         this.md5 = md5;
     }
 
-    public String getLastTxnId() {
+    public long getLastTxnId() {
         return lastTxnId;
     }
 
-    public void setLastTxnId(String lastTxnId) {
+    public void setLastTxnId(long lastTxnId) {
         this.lastTxnId = lastTxnId;
     }
 
-    private boolean fromFile(DataTree dataTree, String fileName) {
-        try {
-            InputStream inputStream = new FileInputStream("");
-            DataInputStream dataInputStream = new DataInputStream(inputStream);
+    /**
+     * Load data tree from snapshot file
+     *
+     * @param dataTree data tree model
+     * @param fullPathFileName snapshot file path
+     * @return true on success
+     */
+    private boolean loadDataTreeFromSnapshotFile(DataTree dataTree, String fullPathFileName) {
+
+        try (InputStream inputStream = new FileInputStream(fullPathFileName);
+             DataInputStream dataInputStream = new DataInputStream(inputStream)) {
 
             // Read last transaction id
-            dataInputStream.readLong();
+            this.lastTxnId = dataInputStream.readLong();
 
             // Read data tree length
             int dataLen = dataInputStream.readInt();
@@ -121,14 +139,34 @@ public class Snapshot {
             byte[] bytes = new byte[dataLen];
 
             // Read data tree bytes
-            dataInputStream.read(bytes);
+            int dataRead = dataInputStream.read(bytes);
+            if (dataRead != dataLen) {
+                logger.error("Data read failed, the data length read is invalid.");
+                return false;
+            }
 
             return dataTree.fromBytes(bytes);
         } catch (IOException e) {
-            // TODO
-        } finally {
-            // TODO
+            logger.error("Load snapshot failed.", e);
         }
         return false;
+    }
+
+    /**
+     * Get snapshot files order by the transaction id, the newest the snapshot file will be at the first place.
+     *
+     * @return snapshot file list
+     */
+    private List<File> getSnapshotFiles() {
+
+        String path = SlowDonkeyServerPropertyHolder.getInstance().getSnapshotFilePath().getValue();
+        File fileDirectory = new File(path);
+        File[] files = fileDirectory.listFiles();
+        if (files == null) {
+            return Collections.emptyList();
+        }
+
+        // TODO order by transaction id
+        return Arrays.asList(files);
     }
 }

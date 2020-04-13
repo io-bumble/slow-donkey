@@ -28,6 +28,10 @@ import java.util.List;
  */
 public class DataTree {
 
+    private long lastTxnId;
+
+    private long term;
+
     public static DataTree getInstance() {
         return SingletonUtil.getInstance(DataTree.class);
     }
@@ -65,5 +69,17 @@ public class DataTree {
 
     public List<String> getChildPathList(String path) {
         return null;
+    }
+
+    public void setLastTxnId(long lastTxnId) {
+        this.lastTxnId = lastTxnId;
+    }
+
+    public long getTerm() {
+        return term;
+    }
+
+    public void setTerm(long term) {
+        this.term = term;
     }
 }

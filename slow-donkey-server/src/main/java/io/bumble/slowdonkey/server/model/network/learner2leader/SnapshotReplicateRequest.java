@@ -31,19 +31,7 @@ import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
  */
 public class SnapshotReplicateRequest extends Request {
 
-    private String snapshotMd5;
-
-    public SnapshotReplicateRequest(String snapshotMd5) {
+    public SnapshotReplicateRequest() {
         super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEARNER_TO_SERVER_LEADER);
-
-        this.snapshotMd5 = snapshotMd5;
-    }
-
-    public String getSnapshotMd5() {
-        return snapshotMd5;
-    }
-
-    public void setSnapshotMd5(String snapshotMd5) {
-        this.snapshotMd5 = snapshotMd5;
     }
 }

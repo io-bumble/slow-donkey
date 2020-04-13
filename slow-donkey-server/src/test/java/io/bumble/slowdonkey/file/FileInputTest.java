@@ -1,4 +1,4 @@
-package io.bumble.slowdonkey;
+package io.bumble.slowdonkey.file;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -8,9 +8,7 @@ import java.io.InputStream;
 /**
  * @author shenxiangyu on 2020/04/11
  */
-public class FileInputTest {
-
-    private static String filePath = "/usr/local/var/slow-donkey/file-output-test.txt";
+public class FileInputTest extends AbstractFileTest {
 
     public static void main(String[] args) throws IOException {
         InputStream inputStream = new FileInputStream(filePath);

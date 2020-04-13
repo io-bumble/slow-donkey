@@ -31,7 +31,7 @@ import io.bumble.slowdonkey.server.model.Vote;
  * follower to candidate and send request asking for a vote to itself expecting to be a new leader to all the nodes.
  *
  * When a leader looses network for a period, then a new leader comes out. The old leader will receive heart beat
- * request from the new leader with a newer epoch, and the old leader will realize the situation and becomes to a
+ * request from the new leader with a newer term, and the old leader will realize the situation and becomes to a
  * follower.
  *
  * </pre>
@@ -45,11 +45,11 @@ public class Candidate extends AbstractLearner implements Voter, LifeCycle {
 
         // Return a vote for request from a candidate asking for a vote.
 
-        // A comparison of epoch will be taken between the candidate itself and the incoming candidate, the one with
-        // newer epoch (with greater num) will obtain the vote.
+        // A comparison of term will be taken between the candidate itself and the incoming candidate, the one with
+        // greater last transaction id will win the election.
 
-        // If a vote request sent from another candidate with a newer epoch arrived, then this node role will be
-        // changed from candidate to follower.
+        // If a vote request sent from another candidate with a newer term and greater last transaction id arrived,
+        // then this node role will be changed from candidate to follower.
 
         SlowDonkey.getInstance().candidate2Follower();
 

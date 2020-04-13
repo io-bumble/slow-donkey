@@ -51,8 +51,8 @@ public class Follower extends AbstractLearner implements Voter, LifeCycle {
         // Return a vote for request from a candidate asking for a vote.
         // If there is no current leader, a vote for the incoming candidate will be returned.
 
-        // If there is an existing leader, then a comparison of epoch will be taken between the existing leader and the
-        // incoming candidate, the one with newer epoch (with greater num) will obtain the vote.
+        // If there is an existing leader, then a comparison of term will be taken between the existing leader and the
+        // incoming candidate, the one with newer term (with greater num) will obtain the vote.
 
         return null;
     }

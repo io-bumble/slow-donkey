@@ -115,4 +115,12 @@ public class SlowDonkeyServerPropertyHolder extends AbstractSlowDonkeyPropertyHo
     public SlowDonkeyProperty getLeaderDataToObserverThreadPoolQueueCapacity() {
         return leaderDataToObserverThreadPoolQueueCapacity;
     }
+
+    public SlowDonkeyProperty getSnapshotFilePath() {
+        return snapshotFilePath;
+    }
+
+    public SlowDonkeyProperty getTxnLogFilePath() {
+        return txnLogFilePath;
+    }
 }

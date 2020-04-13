@@ -25,7 +25,6 @@ import io.bumble.slowdonkey.server.model.network.learner2leader.SnapshotReplicat
 import io.bumble.slowdonkey.server.model.network.learner2leader.SnapshotReplicateResponse;
 import io.bumble.slowdonkey.server.model.network.learner2leader.TxnLogSyncRequest;
 import io.bumble.slowdonkey.server.model.network.learner2leader.TxnLogSyncResponse;
-import io.bumble.slowdonkey.server.persistence.Snapshot;
 import io.bumble.slowdonkey.server.persistence.TxnLogEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +45,7 @@ public class DataSyncHandlerOfLearner {
     }
 
     /**
-     * Sync data from leader.
+     * Sync data from leader. Get data from leader.
      * <ul>
      *     <li>Sync snapshot.</li>
      *     <li>Sync transaction logs.</li>
@@ -58,27 +57,25 @@ public class DataSyncHandlerOfLearner {
 
         SlowDonkeyDatabase database = SlowDonkeyDatabase.getInstance();
 
-        Snapshot snapshot = database.getSnapshot();
+        database.setAvailable(false);
 
         // Get snapshot replication from the leader. Send sync request to leader with the md5 of current snapshot, and
         // the leader will response the leader snapshot bytes if the leader snapshot md5 is different.
         SnapshotReplicateResponse snapshotReplicateResponse = TransportClient.getInstance().retrySyncRequest(
-                new SnapshotReplicateRequest(snapshot.getMd5()));
+                new SnapshotReplicateRequest());
 
         if (!snapshotReplicateResponse.isSuccess()) {
             logger.error("Send snapshot sync request to leader and response failed.");
             return false;
         }
-        if (!snapshotReplicateResponse.isIdentical()) {
-            boolean receiveSnapSuccess = database.receiveSnapshot(snapshotReplicateResponse.getData());
-            if (!receiveSnapSuccess) {
-                return false;
-            }
+        boolean receiveSnapSuccess = database.receiveSnapshot(snapshotReplicateResponse.getData());
+        if (!receiveSnapSuccess) {
+            return false;
         }
 
         // Get transaction logs from the last transaction id in the snapshot.
         TxnLogSyncResponse txnLogSyncResponse = TransportClient.getInstance().retrySyncRequest(
-                new TxnLogSyncRequest(snapshot.getLastTxnId()));
+                new TxnLogSyncRequest(database.getDataTree().getLastTxnId()));
 
         // Append all the transaction log entries to the data tree.
         if (txnLogSyncResponse.isSuccess()) {
@@ -88,6 +85,7 @@ public class DataSyncHandlerOfLearner {
                     return false;
                 }
             }
+            database.setAvailable(true);
             return true;
         }
         return false;

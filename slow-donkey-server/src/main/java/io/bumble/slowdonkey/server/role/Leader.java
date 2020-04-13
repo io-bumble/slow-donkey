@@ -55,8 +55,8 @@ public class Leader implements Role, Voter, LifeCycle {
 
         // Return a vote for request from a candidate asking for a vote.
 
-        // A comparison of epoch will be taken between the leader itself and the incoming candidate, the one with
-        // newer epoch (with greater num) will obtain the vote.
+        // A comparison of last transaction id will be taken between the leader itself and the incoming candidate,
+        // the one with greater last transaction id will win the election.
 
         return null;
     }

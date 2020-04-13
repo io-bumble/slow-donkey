@@ -28,9 +28,9 @@ import io.bumble.slowdonkey.common.model.network.base.RequestDirectionEnum;
  */
 public class TxnLogSyncRequest extends Request {
 
-    private String lastTxnId;
+    private long lastTxnId;
 
-    public TxnLogSyncRequest(String lastTxnId) {
+    public TxnLogSyncRequest(long lastTxnId) {
         super.setRequestDirectionEnum(RequestDirectionEnum.SERVER_LEARNER_TO_SERVER_LEADER);
 
         this.lastTxnId = lastTxnId;

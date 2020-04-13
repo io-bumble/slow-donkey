@@ -21,6 +21,8 @@ public class SlowDonkeyDatabase {
 
     private TxnLog txnLog = TxnLog.getInstance();
 
+    private boolean available;
+
     public static SlowDonkeyDatabase getInstance() {
         return SingletonUtil.getInstance(SlowDonkeyDatabase.class);
     }
@@ -30,7 +32,7 @@ public class SlowDonkeyDatabase {
      */
     public boolean load() {
 
-        boolean loadSnapshotToDataTreeSuccess = snapshot.fromFile(dataTree);
+        boolean loadSnapshotToDataTreeSuccess = snapshot.loadDataTreeFromSnapshotFile(dataTree);
         if (!loadSnapshotToDataTreeSuccess) {
             return false;
         }
@@ -40,8 +42,10 @@ public class SlowDonkeyDatabase {
     }
 
     /**
-     * 1. Use the incoming bytes array to reload the data tree.
-     * 2. Save the data tree to snapshot file.
+     * <ol>
+     *     <li>Use the incoming bytes array to reload the data tree.</li>
+     *     <li>Save the data tree to snapshot file.</li>
+     * </ol>
      *
      * @param bytes data bytes array
      * @return true on success
@@ -55,7 +59,7 @@ public class SlowDonkeyDatabase {
         }
 
         // Save the data tree to snapshot file
-        return snapshot.toFile(dataTree);
+        return snapshot.saveDataTreeToSnapshotFile(dataTree);
     }
 
     /**
@@ -99,5 +103,17 @@ public class SlowDonkeyDatabase {
 
     public Snapshot getSnapshot() {
         return snapshot;
+    }
+
+    public DataTree getDataTree() {
+        return dataTree;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

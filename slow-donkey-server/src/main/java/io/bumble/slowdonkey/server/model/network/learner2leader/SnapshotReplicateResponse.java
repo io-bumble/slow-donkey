@@ -25,17 +25,7 @@ import io.bumble.slowdonkey.common.model.network.base.Response;
  */
 public class SnapshotReplicateResponse extends Response {
 
-    private boolean identical;
-
     private byte[] data;
-
-    public boolean isIdentical() {
-        return identical;
-    }
-
-    public void setIdentical(boolean identical) {
-        this.identical = identical;
-    }
 
     public byte[] getData() {
         return data;
